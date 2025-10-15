@@ -1,0 +1,48 @@
+name: Multi-Platform
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  ubuntu-job:
+    name: Ubuntu Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: OS info
+        run: uname -a
+      - name: Create and display file
+        run: |
+          echo "Hello from Ubuntu" > hello.txt
+          cat hello.txt
+
+  macos-job:
+    name: macOS Job
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: OS info
+        run: uname -a
+      - name: Create and display file
+        run: |
+          echo "Hello from macOS" > hello.txt
+          cat hello.txt
+
+  windows-job:
+    name: Windows Job
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: OS info (PowerShell)
+        shell: pwsh
+        run: |
+          $PSVersionTable
+          Get-ComputerInfo | Select-Object OsName,OsVersion | Format-List
+      - name: Create and display file
+        shell: pwsh
+        run: |
+          "Hello from Windows" | Out-File -FilePath hello.txt -Encoding utf8
+          Get-Content hello.txt

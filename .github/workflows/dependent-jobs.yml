@@ -1,0 +1,38 @@
+name: Dependent Jobs
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Print build banner
+        run: echo "Building application..."
+      - name: Simulate build
+        run: sleep 3
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Print test banner
+        run: echo "Running tests..."
+      - name: Simulate tests
+        run: sleep 2
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Print deploy banner
+        run: echo "Deploying application..."
+      - name: Simulate deploy
+        run: sleep 2
